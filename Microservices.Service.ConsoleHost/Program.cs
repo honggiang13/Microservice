@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Microsoft.Owin.Hosting;
+using System.Diagnostics;
 
 namespace Microservices.Service.ConsoleHost
 {
@@ -10,6 +8,23 @@ namespace Microservices.Service.ConsoleHost
     {
         static void Main(string[] args)
         {
+            var url = "http://localhost:6878/";
+            try
+            {
+                using (WebApp.Start<Startup>(url))
+                {
+                    Console.WriteLine($"Application is running at: {url}");
+                    Console.WriteLine("Press Ctrl+C to exit.");
+
+                    Process.Start(url);
+
+                    Console.ReadLine();
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex.ToString());
+            }
         }
     }
 }
